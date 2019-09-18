@@ -1,0 +1,22 @@
+{
+  "name": "udemynodejs_note",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilmarc/UdemyNodeJS_Note.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilmarc/UdemyNodeJS_Note/issues"
+  },
+  "homepage": "https://github.com/guilmarc/UdemyNodeJS_Note#readme",
+  "dependencies": {
+    "validator": "^11.1.0"
+  }
+}
