@@ -1,2 +1,0 @@
-This file was create with Node.js
-This is very cool
