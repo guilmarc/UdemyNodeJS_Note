@@ -1,10 +1,6 @@
 const notes = require("./notes")
-
 const validator = require("validator")
-
-
 const yargs = require('yargs')
-
 const message = require("./notes");
 
 //Create Add command line function
