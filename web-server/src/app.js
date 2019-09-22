@@ -1,14 +1,15 @@
 const path = require("path");
 const express = require("express");
 const app = express();
+const hbs = require("hbs");
 
-
-app.set("view engine", "hbs")
-app.use( express.static(path.join(__dirname, "../public")) );  //Prendra par défaut l'index.html dans public
-
-
+app.set("view engine", "hbs");
+app.use( express.static(path.join(__dirname, "../public")) );      //Prendra par défaut l'index.html dans public
+app.set("views", path.join(__dirname, "../templates/views") ); //Configurer le path du répertoire templates pour les HTML
+hbs.registerPartials(path.join(__dirname, "../templates/partials") );
 
 app.get("/", (req, res)=>{
+
     res.render( "index", {
         title: "Weather App",
         name: "Marco Guilmette"
@@ -30,21 +31,28 @@ app.get("/help", (req, res)=>{
     });
 });
 
-// app.get("/help", (req, res)=>{
-//     res.send({
-//         type: "json",
-//         version: "1.2.2"
-//     });
-// });
-//
-// app.get("/about", (req, res)=>{
-//     res.send("<h1>About</h1>");
-// });
-
 app.get("/weather", (req, res)=>{
-    res.send({
-        location: "Granby, Quebec, Canada",
-        weather: "Clear sky at 24 degree, no rain"
+
+    if(!req.query.address) {
+        return res.send({
+           error : "You must provide an address"
+        });
+    }
+
+
+});
+
+app.get("/help/*", (req, res)=>{
+    res.render( "error", {
+        title: "404 Error",
+        message : "Help article not found"
+    });
+});
+
+app.get("*", (req, res)=>{
+    res.render( "error", {
+        title: "404 Error",
+        message : "Page not found"
     });
 });
 
