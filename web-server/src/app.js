@@ -3,6 +3,9 @@ const express = require("express");
 const app = express();
 const hbs = require("hbs");
 
+const forecast = require("./utils/forecast");
+const geocode = require("./utils/geocode");
+
 app.set("view engine", "hbs");
 app.use( express.static(path.join(__dirname, "../public")) );      //Prendra par défaut l'index.html dans public
 app.set("views", path.join(__dirname, "../templates/views") ); //Configurer le path du répertoire templates pour les HTML
@@ -39,6 +42,22 @@ app.get("/weather", (req, res)=>{
         });
     }
 
+    geocode(req.query.address, (error, {latitude, longitude, location} = {}) => {  // ={}  --> Valeur par défaut
+
+        if(error) return console.log(error)
+
+        forecast( latitude, longitude, (error, response) => {
+
+            if(error) return console.log(error)
+
+            res.json({
+                forecast : response,
+                location : location,
+                address  : req.query.address
+            });
+        });
+
+    });
 
 });
 
