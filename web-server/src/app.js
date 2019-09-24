@@ -17,6 +17,8 @@ app.get("/", (req, res)=>{
         title: "Weather App",
         name: "Marco Guilmette"
     });
+
+    console.log("SERVER side is loaded");
 });
 
 app.get("/about", (req, res)=>{
@@ -44,11 +46,17 @@ app.get("/weather", (req, res)=>{
 
     geocode(req.query.address, (error, {latitude, longitude, location} = {}) => {  // ={}  --> Valeur par défaut
 
-        if(error) return console.log(error)
+        if(error) return res.json({
+            error: error
+        })
 
         forecast( latitude, longitude, (error, response) => {
 
-            if(error) return console.log(error)
+            if(error) {
+                return res.json({
+                    error: error
+                })
+            }
 
             res.json({
                 forecast : response,

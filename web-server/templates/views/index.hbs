@@ -2,15 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="./css/style.css" >
-    <link rel="icon" href="./img/weather.png">
-    <script src="./js/app.js"></script>
+    <link rel="stylesheet" href="/css/style.css" >
+    <link rel="icon" href="../../public/img/weather.png">
+    <script src="/js/app.js"></script>
     <title>Weather services</title>
 </head>
 <body>
     <div class="main-content">
         {{>header }}
         <p>Use this pas to get your weather</p>
+
+        <form>
+            <input id="input" placeholder="Enter address here">
+            <button id="button">Search</button>
+        </form>
+
+        <p id="location"></p>
+        <p id="forecast"></p>
+
     </div>
     {{>footer }}
 </body>

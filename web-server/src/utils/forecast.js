@@ -7,17 +7,24 @@ const forecast = ( latitude, longitude, callback ) => {
 
     const url = baseUrl + apiKey + "/" + latitude + "," + longitude + "?units=si";
 
-    request({ url: url, json : true }, (error, {body}) => {
-        if(error) {
-            callback(error.message, undefined)
-        } else {
-            if( body.error ) {
-                callback(body.error, undefined)
+    setTimeout(()=>{
+
+        request({ url: url, json : true }, (error, {body}) => {
+            if(error) {
+                callback(error.message, undefined)
             } else {
-                callback(undefined, "It is currently " + body.currently.temperature + " There is a " + body.currently.precipProbability + "% chance of rain. ")
+                if( body.error ) {
+                    callback(body.error, undefined)
+                } else {
+                    callback(undefined, "It is currently " + body.currently.temperature + " There is a " + body.currently.precipProbability + "% chance of rain. ")
+                }
             }
-        }
-    });
+        });
+
+    }, 1000); //Simulation d'un travail long !!!
+
+
+
 };
 
 module.exports = forecast;
