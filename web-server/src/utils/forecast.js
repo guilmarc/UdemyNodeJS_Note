@@ -23,7 +23,7 @@ const forecast = ( latitude, longitude, callback ) => {
             }
         });
 
-    }, 1000); //Simulation d'un travail long !!!
+    }, 250); //Simulation d'un travail long !!!
 
 };
 
