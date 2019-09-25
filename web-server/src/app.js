@@ -11,6 +11,8 @@ app.use( express.static(path.join(__dirname, "../public")) );      //Prendra par
 app.set("views", path.join(__dirname, "../templates/views") ); //Configurer le path du répertoire templates pour les HTML
 hbs.registerPartials(path.join(__dirname, "../templates/partials") );
 
+const port = process.env.PORT || 3000;
+
 app.get("/", (req, res)=>{
 
     res.render( "index", {
@@ -83,6 +85,6 @@ app.get("*", (req, res)=>{
     });
 });
 
-app.listen(3000, ()=> {
-   console.log("Server is up on port 3000")
+app.listen(port, ()=> {
+   console.log("Server is up on port " + port)
 });

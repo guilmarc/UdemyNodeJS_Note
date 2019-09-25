@@ -1,16 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    // document.getElementById("button").addEventListener(  "click", () => {
-    //
-    //     const address = document.getElementById("input").textContent.
-    //
-    //     console.log("Address" + address)
-    //
-    //
-    // } );
-
-
-
     const form = document.querySelector("form")
     form.addEventListener("submit", (event)=>{
 
@@ -25,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         const address = document.querySelector("input").value
 
-        const url = "http://localhost:3000/weather?address=" + address;
+        const url = "/weather?address=" + address;
 
         fetch(url)
             .then(response => {
