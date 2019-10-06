@@ -1,6 +1,10 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
+const Task = require("../models/task")
+
+const JWT_SIGN = "60baa195-bf51-40a2-9155-77ebd67ff711";
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -39,12 +43,24 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Age must be a postive number')
             }
         }
-    }
+    },
+    tokens:[{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
+})
+
+userSchema.virtual("tasks", {
+    ref: "Task",
+    localField: "_id",
+    foreignField: "owner"
 })
 
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
-    if(!user) throw new Error("Unable to log in")
+    if(!user) throw new Error("Unable to login")
 
     const isMatch = await bcrypt.compare(password, user.password)
 
@@ -52,6 +68,22 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
     return user
 };
+
+userSchema.methods.generateAuthToken = async function() {
+    const token = jwt.sign( { _id: this._id.toString() }, JWT_SIGN );
+    this.tokens = this.tokens.concat({token});
+    await this.save();
+    return token
+}
+
+userSchema.methods.toJSON = function () {
+    const userObject = this.toObject()
+
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
 
 userSchema.pre('save', async function (next) {
     const user = this
@@ -62,6 +94,13 @@ userSchema.pre('save', async function (next) {
 
     next()
 })
+
+userSchema.pre("remove", async function(next) {
+
+    await Task.deleteMany({ owner: this._id })
+
+    next()
+});
 
 const User = mongoose.model('User', userSchema)
 
