@@ -4,9 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const Task = require("../models/task")
 
-
-const JWT_SIGN = "60baa195-bf51-40a2-9155-77ebd67ff711";
-
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -76,7 +73,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 };
 
 userSchema.methods.generateAuthToken = async function() {
-    const token = jwt.sign( { _id: this._id.toString() }, JWT_SIGN );
+    const token = jwt.sign( { _id: this._id.toString() }, process.env.JWT_SECRET );
     this.tokens = this.tokens.concat({token});
     await this.save();
     return token

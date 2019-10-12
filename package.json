@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node task-manager/src/index.js"
+    "start": "node task-manager/src/index.js",
+    "env-cmd": "env-cmd ./config/dev.env"
   },
   "repository": {
     "type": "git",
