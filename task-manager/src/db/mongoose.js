@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const connectionURL = process.env.MONGODB_URL;
-const databaseName = "task-manager-api";
+
 const options = {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -11,7 +11,7 @@ const options = {
     useFindAndModify : false
 };
 
-mongoose.connect(connectionURL + "/" + databaseName, options)
+mongoose.connect(connectionURL, options)
 
 
 //

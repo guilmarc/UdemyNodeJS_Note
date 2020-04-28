@@ -7,6 +7,7 @@ const validator = require("validator");
 const schema = new mongoose.Schema({
     description: {
         type: String,
+        minlength: [7, 'Description too short'],
         trim: true,
         required: true,
     },
